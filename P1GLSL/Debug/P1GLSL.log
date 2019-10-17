@@ -1,0 +1,9 @@
+﻿  main.cpp
+cl : línea de comandos warning D9035: La opción 'Gm' está desusada y se quitará en próximas versiones
+C:\Users\joanv.COMPUTADORJOAN\Documents\Universidad\Master IGV\Universidad\G3D\Prácticas\Practica 1\Practica1\P1GLSL\scr\main.cpp(87,20): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\joanv.COMPUTADORJOAN\Documents\Universidad\Master IGV\Universidad\G3D\Prácticas\Practica 1\Practica1\P1GLSL\scr\main.cpp(117,41): warning C4305: 'argumento': truncamiento de 'double' a 'T'
+C:\Users\joanv.COMPUTADORJOAN\Documents\Universidad\Master IGV\Universidad\G3D\Prácticas\Practica 1\Practica1\P1GLSL\scr\main.cpp(117,41): warning C4305:         with
+C:\Users\joanv.COMPUTADORJOAN\Documents\Universidad\Master IGV\Universidad\G3D\Prácticas\Practica 1\Practica1\P1GLSL\scr\main.cpp(117,41): warning C4305:         [
+C:\Users\joanv.COMPUTADORJOAN\Documents\Universidad\Master IGV\Universidad\G3D\Prácticas\Practica 1\Practica1\P1GLSL\scr\main.cpp(117,41): warning C4305:             T=float
+C:\Users\joanv.COMPUTADORJOAN\Documents\Universidad\Master IGV\Universidad\G3D\Prácticas\Practica 1\Practica1\P1GLSL\scr\main.cpp(117,41): warning C4305:         ]
+  P1GLSL.vcxproj -> C:\Users\joanv.COMPUTADORJOAN\Documents\Universidad\Master IGV\Universidad\G3D\Prácticas\Practica 1\Practica1\P1GLSL\Debug\P1GLSL.exe
