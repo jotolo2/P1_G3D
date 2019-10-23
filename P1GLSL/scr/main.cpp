@@ -6,9 +6,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 
-
 //Idenficadores de los objetos de la escena
-int objId1 =-1;
+int objId1 = -1;
 int objId2 = -1;
 
 //Vectores descriptores de la cámara para la matriz view
@@ -22,19 +21,18 @@ void keyboardFunc(unsigned char key, int x, int y);
 void mouseFunc(int button, int state, int x, int y);
 void mouseMotionFunc(int x, int y);
 
-
 int main(int argc, char** argv)
 {
 	std::locale::global(std::locale("spanish")); // acentos ;)
-	if (!IGlib::init("../shaders_P1/shader.v5.vert", "../shaders_P1/shader.v5.frag"))
+	if (!IGlib::init("../shaders_P1/shader.v10.vert", "../shaders_P1/shader.v10.frag"))
 		return -1;
-   
+
 	//CBs
 	IGlib::setResizeCB(resizeFunc);
 	IGlib::setIdleCB(idleFunc);
 	IGlib::setKeyboardCB(keyboardFunc);
 	IGlib::setMouseCB(mouseFunc);
-  	IGlib::setMouseMoveCB(mouseMotionFunc);
+	IGlib::setMouseMoveCB(mouseMotionFunc);
 
 	//Matriz de Vista
 	cameraPos = glm::vec3(0.0f, 0.0f, -7.0f);
@@ -56,24 +54,25 @@ int main(int argc, char** argv)
 
 	//Creamos el objeto que vamos a visualizar
 	objId1 = IGlib::createObj(cubeNTriangleIndex, cubeNVertex, cubeTriangleIndex,
-			cubeVertexPos, cubeVertexColor, cubeVertexNormal,cubeVertexTexCoord, cubeVertexTangent);
+		cubeVertexPos, cubeVertexColor, cubeVertexNormal, cubeVertexTexCoord, cubeVertexTangent);
 
 	objId2 = IGlib::createObj(cubeNTriangleIndex, cubeNVertex, cubeTriangleIndex,
 		cubeVertexPos, cubeVertexColor, cubeVertexNormal, cubeVertexTexCoord, cubeVertexTangent);
-		
+
 	glm::mat4 modelMat = glm::mat4(1.0f);
 	IGlib::setModelMat(objId1, modelMat);
 	IGlib::setModelMat(objId2, modelMat);
 
 	//Incluir texturas aquí.
-	IGlib::addColorTex(objId1, "../img/color.png");
-	
+	//IGlib::addColorTex(objId1, "../img/color.png");
+	IGlib::addColorTex(objId1, "../img/discardText.png");
+
 	//CBs
 	IGlib::setIdleCB(idleFunc);
 	IGlib::setResizeCB(resizeFunc);
 	IGlib::setKeyboardCB(keyboardFunc);
 	IGlib::setMouseCB(mouseFunc);
-	
+
 	//Mainloop
 	IGlib::mainLoop();
 	IGlib::destroy();
@@ -85,13 +84,14 @@ void resizeFunc(int width, int height)
 	//Ajusta el aspect ratio al tamaño de la venta
 	glm::mat4 proj = glm::mat4(0.0f);
 	float aspectRatio = width / height;
-	float n = 1.0f;
-	float f = 50.0f;
+	float near = 1.0f;
+	float far = 50.0f;
+	float fov = 30.0f;
 
-	proj[0].x = 1 / (tan(glm::radians(30.0f)) * aspectRatio);
-	proj[1].y = 1 / tan(glm::radians(30.0f));
-	proj[2].z = -(f + n) / (f - n);
-	proj[3].z = (-2.0f * f * n) / (f - n);
+	proj[0].x = 1 / (tan(glm::radians(fov)) * aspectRatio);
+	proj[1].y = 1 / tan(glm::radians(fov));
+	proj[2].z = -(far + near) / (far - near);
+	proj[3].z = (-2.0f * far * near) / (far - near);
 	proj[2].w = -1.0f;
 
 	IGlib::setProjMat(proj);
@@ -113,7 +113,7 @@ void idleFunc()
 	float z = 0 + r * sin(ang);
 	model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(x, 0.0f, z));
-	model = glm::rotate(model, ang*10.0f, glm::vec3(0, 1, 0));
+	model = glm::rotate(model, ang * 10.0f, glm::vec3(0, 1, 0));
 	model = glm::scale(model, glm::vec3(0.2));
 	IGlib::setModelMat(objId2, model);
 }
@@ -129,26 +129,26 @@ void keyboardFunc(unsigned char key, int x, int y)
 	case('a'):
 	case('A'):
 		left = glm::normalize(glm::cross(cameraUp, cameraForward));
-		cameraPos = cameraPos + left*0.2f;
+		cameraPos = cameraPos + left * 0.2f;
 		IGlib::setViewMat(glm::lookAt(cameraPos, cameraPos + cameraForward, cameraUp));
 		break;
 
 	case('d'):
 	case('D'):
 		left = glm::normalize(glm::cross(cameraUp, cameraForward));
-		cameraPos = cameraPos - left*0.2f;
+		cameraPos = cameraPos - left * 0.2f;
 		IGlib::setViewMat(glm::lookAt(cameraPos, cameraPos + cameraForward, cameraUp));
 		break;
 
 	case('s'):
 	case('S'):
-		cameraPos = cameraPos - cameraForward*0.2f;
+		cameraPos = cameraPos - cameraForward * 0.2f;
 		IGlib::setViewMat(glm::lookAt(cameraPos, cameraPos + cameraForward, cameraUp));
 		break;
 
 	case('w'):
 	case('W'):
-		cameraPos = cameraPos + cameraForward*0.2f;
+		cameraPos = cameraPos + cameraForward * 0.2f;
 		IGlib::setViewMat(glm::lookAt(cameraPos, cameraPos + cameraForward, cameraUp));
 		break;
 
@@ -168,16 +168,15 @@ void keyboardFunc(unsigned char key, int x, int y)
 		IGlib::setViewMat(glm::lookAt(cameraPos, cameraPos + cameraForward, cameraUp));
 		break;
 	}
-
 }
 
 void mouseFunc(int button, int state, int x, int y)
 {
-	if (state==0)
+	if (state == 0)
 		std::cout << "Se ha pulsado el botón ";
 	else
 		std::cout << "Se ha soltado el botón ";
-	
+
 	if (button == 0) std::cout << "de la izquierda del ratón " << std::endl;
 	if (button == 1) std::cout << "central del ratón " << std::endl;
 	if (button == 2) std::cout << "de la derecha del ratón " << std::endl;
@@ -187,5 +186,4 @@ void mouseFunc(int button, int state, int x, int y)
 
 void mouseMotionFunc(int x, int y)
 {
-
 }

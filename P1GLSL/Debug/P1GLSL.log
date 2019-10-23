@@ -1,9 +1,11 @@
 ﻿  main.cpp
 cl : línea de comandos warning D9035: La opción 'Gm' está desusada y se quitará en próximas versiones
-C:\Users\joanv.COMPUTADORJOAN\Documents\Universidad\Master IGV\Universidad\G3D\Prácticas\Practica 1\Practica1\P1GLSL\scr\main.cpp(87,20): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\joanv.COMPUTADORJOAN\Documents\Universidad\Master IGV\Universidad\G3D\Prácticas\Practica 1\Practica1\P1GLSL\scr\main.cpp(117,41): warning C4305: 'argumento': truncamiento de 'double' a 'T'
-C:\Users\joanv.COMPUTADORJOAN\Documents\Universidad\Master IGV\Universidad\G3D\Prácticas\Practica 1\Practica1\P1GLSL\scr\main.cpp(117,41): warning C4305:         with
-C:\Users\joanv.COMPUTADORJOAN\Documents\Universidad\Master IGV\Universidad\G3D\Prácticas\Practica 1\Practica1\P1GLSL\scr\main.cpp(117,41): warning C4305:         [
-C:\Users\joanv.COMPUTADORJOAN\Documents\Universidad\Master IGV\Universidad\G3D\Prácticas\Practica 1\Practica1\P1GLSL\scr\main.cpp(117,41): warning C4305:             T=float
-C:\Users\joanv.COMPUTADORJOAN\Documents\Universidad\Master IGV\Universidad\G3D\Prácticas\Practica 1\Practica1\P1GLSL\scr\main.cpp(117,41): warning C4305:         ]
-  P1GLSL.vcxproj -> C:\Users\joanv.COMPUTADORJOAN\Documents\Universidad\Master IGV\Universidad\G3D\Prácticas\Practica 1\Practica1\P1GLSL\Debug\P1GLSL.exe
+C:\Users\Carlos-PC\Dropbox\Master Gráficos\Gráficos 3D\Prácticas\P1\Grupo\P1_G3D\P1GLSL\scr\main.cpp(87,20): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Carlos-PC\Dropbox\Master Gráficos\Gráficos 3D\Prácticas\P1\Grupo\P1_G3D\P1GLSL\scr\main.cpp(117,41): warning C4305: 'argumento': truncamiento de 'double' a 'T'
+C:\Users\Carlos-PC\Dropbox\Master Gráficos\Gráficos 3D\Prácticas\P1\Grupo\P1_G3D\P1GLSL\scr\main.cpp(117,41): warning C4305:         with
+C:\Users\Carlos-PC\Dropbox\Master Gráficos\Gráficos 3D\Prácticas\P1\Grupo\P1_G3D\P1GLSL\scr\main.cpp(117,41): warning C4305:         [
+C:\Users\Carlos-PC\Dropbox\Master Gráficos\Gráficos 3D\Prácticas\P1\Grupo\P1_G3D\P1GLSL\scr\main.cpp(117,41): warning C4305:             T=float
+C:\Users\Carlos-PC\Dropbox\Master Gráficos\Gráficos 3D\Prácticas\P1\Grupo\P1_G3D\P1GLSL\scr\main.cpp(117,41): warning C4305:         ]
+  LINK : no se encontró C:\Users\Carlos-PC\Dropbox\Master Gráficos\Gráficos 3D\Prácticas\P1\Grupo\P1_G3D\P1GLSL\Debug\P1GLSL.exe o no lo generó el último vínculo incremental; ejecutando vínculo completo
+main.obj : warning LNK4075: se omite '/EDITANDCONTINUE' debido a la especificación '/SAFESEH'
+  P1GLSL.vcxproj -> C:\Users\Carlos-PC\Dropbox\Master Gráficos\Gráficos 3D\Prácticas\P1\Grupo\P1_G3D\P1GLSL\Debug\P1GLSL.exe
