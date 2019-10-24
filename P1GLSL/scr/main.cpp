@@ -6,13 +6,17 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 
-//Idenficadores de los objetos de la escena
+// Idenficadores de los objetos de la escena
 int objId1 = -1;
 int objId2 = -1;
 
-//Vectores descriptores de la cámara para la matriz view
+// Vectores descriptores de la cámara para la matriz view
 glm::mat4 view;
 glm::vec3 cameraPos, cameraForward, cameraUp;
+
+// Control del movimiento del ratón
+float x_pressed, y_pressed;
+bool isPressed;
 
 //Declaración de CB
 void resizeFunc(int width, int height);
@@ -37,18 +41,18 @@ int main(int argc, char** argv)
 	//Matriz de Vista
 	cameraPos = glm::vec3(0.0f, 0.0f, -7.0f);
 	cameraForward = glm::vec3(0.0f, 0.0f, 1.0f);
-	cameraUp = glm::vec3(0, 1, 0);
+	cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 	view = glm::lookAt(cameraPos, cameraPos + cameraForward, cameraUp);
 	IGlib::setViewMat(view);
 
 	//Matriz de proyección
 	glm::mat4 proj = glm::mat4(0.0f);
-	float n = 1.0f;
-	float f = 50.0f;
-	proj[0].x = 1 / tan(glm::radians(30.0f));
-	proj[1].y = 1 / tan(glm::radians(30.0f));
-	proj[2].z = -(f + n) / (f - n);
-	proj[3].z = (-2.0f * f * n) / (f - n);
+	float near = 1.0f;
+	float far = 50.0f;
+	proj[0].x = 1.0f / tan(glm::radians(30.0f));
+	proj[1].y = 1.0f / tan(glm::radians(30.0f));
+	proj[2].z = -(far + near) / (far - near);
+	proj[3].z = (-2.0f * far * near) / (far - near);
 	proj[2].w = -1.0f;
 	IGlib::setProjMat(proj);
 
@@ -83,13 +87,13 @@ void resizeFunc(int width, int height)
 {
 	//Ajusta el aspect ratio al tamaño de la venta
 	glm::mat4 proj = glm::mat4(0.0f);
-	float aspectRatio = width / height;
+	float aspectRatio = float(width) / float(height);
 	float near = 1.0f;
 	float far = 50.0f;
 	float fov = 30.0f;
 
-	proj[0].x = 1 / (tan(glm::radians(fov)) * aspectRatio);
-	proj[1].y = 1 / tan(glm::radians(fov));
+	proj[0].x = 1.0f / (tan(glm::radians(fov)) * aspectRatio);
+	proj[1].y = 1.0f / tan(glm::radians(fov));
 	proj[2].z = -(far + near) / (far - near);
 	proj[3].z = (-2.0f * far * near) / (far - near);
 	proj[2].w = -1.0f;
@@ -114,7 +118,7 @@ void idleFunc()
 	model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(x, 0.0f, z));
 	model = glm::rotate(model, ang * 10.0f, glm::vec3(0, 1, 0));
-	model = glm::scale(model, glm::vec3(0.2));
+	model = glm::scale(model, glm::vec3(0.2f));
 	IGlib::setModelMat(objId2, model);
 }
 
@@ -173,17 +177,57 @@ void keyboardFunc(unsigned char key, int x, int y)
 void mouseFunc(int button, int state, int x, int y)
 {
 	if (state == 0)
-		std::cout << "Se ha pulsado el botón ";
+	{
+		// Cuando se pulsa el botón izquierdo
+		if (button == 0)
+		{
+			x_pressed = x;
+			y_pressed = y;
+			isPressed = true;
+		}
+	}
 	else
-		std::cout << "Se ha soltado el botón ";
+	{
+		isPressed = false;
+	}
 
-	if (button == 0) std::cout << "de la izquierda del ratón " << std::endl;
-	if (button == 1) std::cout << "central del ratón " << std::endl;
-	if (button == 2) std::cout << "de la derecha del ratón " << std::endl;
+	//if (button == 0) std::cout << "de la izquierda del ratón " << std::endl;
+	//if (button == 1) std::cout << "central del ratón " << std::endl;
+	//if (button == 2) std::cout << "de la derecha del ratón " << std::endl;
 
-	std::cout << "en la posición " << x << " " << y << std::endl << std::endl;
+	//std::cout << "en la posición " << x << " " << y << std::endl << std::endl;
 }
 
 void mouseMotionFunc(int x, int y)
 {
+	if (isPressed)
+	{
+		glm::vec3 left;
+		glm::vec4 result;
+		glm::mat4 horizontal_rotation, vertical_rotation;
+
+		// Cálculo del ángulo mediante la diferencia de (raton - raton pulsado)
+		float scale = 0.001f;
+		float angle_x = (x - x_pressed) * scale;
+		float angle_y = (y - y_pressed) * scale;
+
+		left = glm::normalize(glm::cross(cameraForward, cameraUp));
+
+		// Obtención de las rotaciones 
+		horizontal_rotation = glm::rotate(glm::mat4(1.0f), angle_x, glm::vec3(0, 1, 0));
+		vertical_rotation = glm::rotate(glm::mat4(1.0f), angle_y, left);
+
+		// Aplicación de las rotaciones a los dos vectores que determinan la orientación de la cámara
+		result = horizontal_rotation * vertical_rotation *   glm::vec4(cameraForward, 0.0f);
+		cameraForward = glm::normalize(glm::vec3(result));
+
+		result =  horizontal_rotation * vertical_rotation * glm::vec4(cameraUp, 0.0f);
+		cameraUp = glm::normalize(glm::vec3(result));
+
+		// Reseteamos la matriz de vista con la nueva orientación
+		IGlib::setViewMat(glm::lookAt(cameraPos, cameraPos + cameraForward, cameraUp));
+
+		x_pressed = x;
+		y_pressed = y;
+	}
 }
