@@ -1,5 +1,6 @@
 #include "BOX.h"
 #include <IGL/IGlib.h>
+#include <vector>
 
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
@@ -9,6 +10,9 @@
 // Idenficadores de los objetos de la escena
 int objId1 = -1;
 int objId2 = -1;
+int objId3 = -1;
+
+bool firstCurve = true;
 
 // Vectores descriptores de la cámara para la matriz view
 glm::mat4 view;
@@ -17,6 +21,9 @@ glm::vec3 cameraPos, cameraForward, cameraUp;
 // Control del movimiento del ratón
 float x_pressed, y_pressed;
 bool isPressed;
+
+// Puntos de control de trayectoria
+std::vector <glm::vec3> controlPoints;
 
 //Declaración de CB
 void resizeFunc(int width, int height);
@@ -28,7 +35,7 @@ void mouseMotionFunc(int x, int y);
 int main(int argc, char** argv)
 {
 	std::locale::global(std::locale("spanish")); // acentos ;)
-	if (!IGlib::init("../shaders_P1/shader.v10.vert", "../shaders_P1/shader.v10.frag"))
+	if (!IGlib::init("../shaders_P1/shader.v8.vert", "../shaders_P1/shader.v8.frag"))
 		return -1;
 
 	//CBs
@@ -38,8 +45,8 @@ int main(int argc, char** argv)
 	IGlib::setMouseCB(mouseFunc);
 	IGlib::setMouseMoveCB(mouseMotionFunc);
 
-	//Matriz de Vista
-	cameraPos = glm::vec3(0.0f, 0.0f, -7.0f);
+	//Matriz de Vista2
+	cameraPos = glm::vec3(0.0f, 0.0f, -15.0f);
 	cameraForward = glm::vec3(0.0f, 0.0f, 1.0f);
 	cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 	view = glm::lookAt(cameraPos, cameraPos + cameraForward, cameraUp);
@@ -62,10 +69,27 @@ int main(int argc, char** argv)
 
 	objId2 = IGlib::createObj(cubeNTriangleIndex, cubeNVertex, cubeTriangleIndex,
 		cubeVertexPos, cubeVertexColor, cubeVertexNormal, cubeVertexTexCoord, cubeVertexTangent);
+		
+	objId3 = IGlib::createObj(cubeNTriangleIndex, cubeNVertex, cubeTriangleIndex,
+		cubeVertexPos, cubeVertexColor, cubeVertexNormal, cubeVertexTexCoord, cubeVertexTangent);
 
 	glm::mat4 modelMat = glm::mat4(1.0f);
 	IGlib::setModelMat(objId1, modelMat);
 	IGlib::setModelMat(objId2, modelMat);
+	IGlib::setModelMat(objId3, modelMat);
+
+	// Creacion de puntos de control
+	glm::vec3 points[] = {
+		glm::vec3(-4.5f,0.0f,0.0f), //P0
+		glm::vec3(-1.5f,8.0f,10.0f), //P1
+		glm::vec3(4.5f,8.0f,10.0f), //P2
+		glm::vec3(4.5f,0.0f,0.0f), //P3
+		glm::vec3(4.5f,-8.0f,-10.0f), //P4
+		glm::vec3(-1.5f,-8.0f,-10.0f), //P5
+
+	};
+
+	controlPoints.insert(controlPoints.begin(), points, points + 6);
 
 	//Incluir texturas aquí.
 	//IGlib::addColorTex(objId1, "../img/color.png");
@@ -104,6 +128,7 @@ void resizeFunc(int width, int height)
 void idleFunc()
 {
 	static float ang = 0.0f;
+	static float t = 0.0f;
 	glm::mat4 model(1.0f);
 
 	//Rotacion del primer cubo sobre si mismo
@@ -120,6 +145,34 @@ void idleFunc()
 	model = glm::rotate(model, ang * 10.0f, glm::vec3(0, 1, 0));
 	model = glm::scale(model, glm::vec3(0.2f));
 	IGlib::setModelMat(objId2, model);
+
+	model = glm::mat4(1.0f);
+
+	// Trayectoria de  tercer cubo
+	glm::vec3 pos;
+	if (t < 1.0f)
+	{
+		t = t + 0.01f;
+	}
+	else
+	{
+		t -= 1.0f;
+		firstCurve = !firstCurve;
+	}
+
+	if (firstCurve) 
+	{
+		pos = std::pow((1 - t), 3) * controlPoints[0] + 3 * t * std::pow(1 - t, 2) * controlPoints[1]
+			+ 3 * t * t * (1 - t) * controlPoints[2] + t * t * t * controlPoints[3];
+	}	
+	else
+	{
+		pos = std::pow((1 - t), 3) * controlPoints[3] + 3 * t * std::pow(1 - t, 2) * controlPoints[4]
+			+ 3 * t * t * (1 - t) * controlPoints[5] + t * t * t * controlPoints[0];
+	}
+	model = glm::translate(model, glm::vec3(pos));
+
+	IGlib::setModelMat(objId3, model);
 }
 
 void keyboardFunc(unsigned char key, int x, int y)
