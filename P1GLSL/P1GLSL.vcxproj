@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="scr\BOX.h" />
+    <ClInclude Include="scr\PYRAMID.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scr\main.cpp">
@@ -26,6 +27,8 @@
     <None Include="..\shaders_P1\shader.v1.vert" />
     <None Include="..\shaders_P1\shader.v10.frag" />
     <None Include="..\shaders_P1\shader.v10.vert" />
+    <None Include="..\shaders_P1\shader.v11.frag" />
+    <None Include="..\shaders_P1\shader.v11.vert" />
     <None Include="..\shaders_P1\shader.v2.frag" />
     <None Include="..\shaders_P1\shader.v2.vert" />
     <None Include="..\shaders_P1\shader.v3.frag" />
