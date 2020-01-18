@@ -65,6 +65,7 @@ int main(int argc, char** argv)
 	IGlib::setProjMat(proj);
 
 	//Creamos el objeto que vamos a visualizar
+	/*
 	objId1 = IGlib::createObj(cubeNTriangleIndex, cubeNVertex, cubeTriangleIndex,
 		cubeVertexPos, cubeVertexColor, cubeVertexNormal, cubeVertexTexCoord, cubeVertexTangent);
 
@@ -73,7 +74,9 @@ int main(int argc, char** argv)
 		
 	objId3 = IGlib::createObj(cubeNTriangleIndex, cubeNVertex, cubeTriangleIndex,
 		cubeVertexPos, cubeVertexColor, cubeVertexNormal, cubeVertexTexCoord, cubeVertexTangent);
-	/*
+	*/
+	
+	//OPTATIVA 4: CREAMOS NUEVO OBJETO DEFINIDO POR NOSOTROS MANUALMENTE
 	objId1 = IGlib::createObj(pyramidNTriangleIndex, pyramidNVertex, pyramidTriangleIndex,
 		pyramidVertexPos, pyramidVertexColor, pyramidVertexNormal, pyramidVertexTexCoord, pyramidVertexTangent);
 
@@ -82,7 +85,7 @@ int main(int argc, char** argv)
 
 	objId3 = IGlib::createObj(pyramidNTriangleIndex, pyramidNVertex, pyramidTriangleIndex,
 		pyramidVertexPos, pyramidVertexColor, pyramidVertexNormal, pyramidVertexTexCoord, pyramidVertexTangent);
-		*/
+		
 	glm::mat4 modelMat = glm::mat4(1.0f);
 	IGlib::setModelMat(objId1, modelMat);
 	IGlib::setModelMat(objId2, modelMat);
@@ -98,7 +101,6 @@ int main(int argc, char** argv)
 		glm::vec3(-1.5f,-8.0f,-10.0f), //P5
 
 	};
-
 	controlPoints.insert(controlPoints.begin(), points, points + 6);
 
 	//Incluir texturas aquí.
@@ -119,7 +121,7 @@ int main(int argc, char** argv)
 
 void resizeFunc(int width, int height)
 {
-	//Ajusta el aspect ratio al tamaño de la venta
+	//OBLIGATORIO 1: AJUSTE DEL ASPECT RATIO AL TAMAÑO DE LA VENTANA
 	glm::mat4 proj = glm::mat4(0.0f);
 	float aspectRatio = float(width) / float(height);
 	float near = 1.0f;
@@ -146,7 +148,7 @@ void idleFunc()
 	model = glm::rotate(model, ang, glm::vec3(1, 1, 0));
 	IGlib::setModelMat(objId1, model);
 
-	//Órbita del segundo cubo
+	//OBLIGATORIO 2: ÓRBITA DEL SEGUNDO CUBO
 	float r = 3.0f;
 	float x = 0 + r * cos(ang);
 	float z = 0 + r * sin(ang);
@@ -156,9 +158,8 @@ void idleFunc()
 	model = glm::scale(model, glm::vec3(0.2f));
 	IGlib::setModelMat(objId2, model);
 
+	//OPTATIVO 2: TRAYECTORIA DEL TERCER CUBO MEDIENATE 2 CURVAS DE BEZIER DE 3er GRADO
 	model = glm::mat4(1.0f);
-
-	// Trayectoria de  tercer cubo
 	glm::vec3 pos;
 	if (t < 1.0f)
 	{
@@ -187,7 +188,8 @@ void idleFunc()
 
 void keyboardFunc(unsigned char key, int x, int y)
 {
-	std::cout << "Se ha pulsado la tecla " << key << std::endl << std::endl;
+	//std::cout << "Se ha pulsado la tecla " << key << std::endl << std::endl;
+	//OBLIGATORIO 3: CONTROL DE LA CÁMARA POR TECLADO
 	glm::vec3 left;
 	glm::vec4 result;
 	glm::mat4 rotation;
@@ -234,6 +236,7 @@ void keyboardFunc(unsigned char key, int x, int y)
 		cameraForward = glm::normalize(glm::vec3(result));
 		IGlib::setViewMat(glm::lookAt(cameraPos, cameraPos + cameraForward, cameraUp));
 		break;
+
 	}
 }
 
@@ -265,6 +268,7 @@ void mouseMotionFunc(int x, int y)
 {
 	if (isPressed)
 	{
+		//OPTATIVO 1: CONTROL DE LA CÁMARA POR RATÓN
 		glm::vec3 left;
 		glm::vec4 result;
 		glm::mat4 horizontal_rotation, vertical_rotation;

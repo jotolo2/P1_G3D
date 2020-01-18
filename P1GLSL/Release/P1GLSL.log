@@ -1,10 +1,10 @@
 ﻿  main.cpp
-C:\Users\joanv.COMPUTADORJOAN\Documents\Universidad\Master IGV\Universidad\G3D\Prácticas\Practica 1\P1_G3D\P1GLSL\scr\main.cpp(247,16): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\joanv.COMPUTADORJOAN\Documents\Universidad\Master IGV\Universidad\G3D\Prácticas\Practica 1\P1_G3D\P1GLSL\scr\main.cpp(248,16): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\joanv.COMPUTADORJOAN\Documents\Universidad\Master IGV\Universidad\G3D\Prácticas\Practica 1\P1_G3D\P1GLSL\scr\main.cpp(293,15): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\joanv.COMPUTADORJOAN\Documents\Universidad\Master IGV\Universidad\G3D\Prácticas\Practica 1\P1_G3D\P1GLSL\scr\main.cpp(294,15): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\joanv.COMPUTADORJOAN\Documents\Universidad\Master IGV\Universidad\G3D\Prácticas\Practica 1\P1_G3D\P1GLSL\scr\main.cpp(250,16): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\joanv.COMPUTADORJOAN\Documents\Universidad\Master IGV\Universidad\G3D\Prácticas\Practica 1\P1_G3D\P1GLSL\scr\main.cpp(251,16): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\joanv.COMPUTADORJOAN\Documents\Universidad\Master IGV\Universidad\G3D\Prácticas\Practica 1\P1_G3D\P1GLSL\scr\main.cpp(297,15): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\joanv.COMPUTADORJOAN\Documents\Universidad\Master IGV\Universidad\G3D\Prácticas\Practica 1\P1_G3D\P1GLSL\scr\main.cpp(298,15): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
   Generando código
-  1 of 194 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
+  0 of 183 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   Generación de código finalizada
